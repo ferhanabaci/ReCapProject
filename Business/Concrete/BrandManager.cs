@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Business.Concrete
 {
-    class BrandManager : IBrandService
+   public  class BrandManager : IBrandService
     {
         IBrandDal _brandDal;
 
@@ -15,6 +15,9 @@ namespace Business.Concrete
         {
             _brandDal = brandDal;
         }
+
+     
+
         public void AddBrand(Brand brand)
         {
 
@@ -35,13 +38,18 @@ namespace Business.Concrete
 
         public Brand GetById(int brandId)
         {
-            return _brandDal.Get(p => p.BrandId == brandId);
+            return _brandDal.Get(b => b.BrandId == brandId);
         }
 
         public void UpdateBrand(Brand brand)
         {
             _brandDal.Update(brand);
             Console.WriteLine("Brand Update" + brand.BrandName);
+        }
+
+        public void Add(Brand brand)
+        {
+            throw new NotImplementedException();
         }
     }
 }

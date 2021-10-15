@@ -47,17 +47,23 @@ namespace Business.Concrete
             return _carDal.GetAll();
         }
 
-      
+
 
         public Car GetById(int Id)
+
         {
-            return _carDal.Get(p => p.Id == Id);
+            return _carDal.Get(p => p.Id == Id); 
         }
 
         public void Update(Car car)
         {
             _carDal.Update(car);
             Console.WriteLine("Updated" + car.Description);
+        }
+
+        public IEnumerable<object> GetCarDetails()
+        {
+            throw new NotImplementedException();
         }
     }
 }
