@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -18,38 +20,48 @@ namespace Business.Concrete
 
      
 
-        public void AddBrand(Brand brand)
-        {
 
-            _brandDal.Add(brand);
-            Console.WriteLine("Brand Added" + brand.BrandName);
-        }
-
-        public void DeleteBrand(Brand brand)
+        public IResult Delete(Brand brand)
         {
             _brandDal.Delete(brand);
-            Console.WriteLine("Brand Deleted" + brand.BrandName);
+            return new SuccessResult();
+            Console.WriteLine(Messages.BrandDeleted);
         }
 
-        public List<Brand> GetAll()
+        public IDataResult<List<Brand>> GetAll()
         {
-            return GetAll();
+            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll());
         }
 
-        public Brand GetById(int brandId)
+        public IDataResult<List<Brand>> GetById(int brandId)
         {
-            return _brandDal.Get(b => b.BrandId == brandId);
+
+            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(p => p.BrandId == brandId));
         }
 
-        public void UpdateBrand(Brand brand)
+        public IResult Update(Brand brand)
         {
+            if (brand.BrandName.Length < 3)
+            {
+
+                return new ErrorResult(Messages.BrandUpdated);
+
+            }
             _brandDal.Update(brand);
-            Console.WriteLine("Brand Update" + brand.BrandName);
+            return new SuccessResult(Messages.BrandUpdated);
         }
 
-        public void Add(Brand brand)
+        public IResult Add(Brand brand)
         {
-            throw new NotImplementedException();
+
+            if (brand.BrandName.Length < 2)
+            {
+                return new ErrorResult(Messages.BrandAdded);
+            }
+            _brandDal.Add(brand);
+
+            return new SuccessResult(Messages.BrandAdded);
+
         }
     }
 }

@@ -21,6 +21,27 @@ namespace ConsoleUI
             AddTest(brandManager, colorManager, carManager);
 
         }
+        private static void CarTest()
+        {
+            CarManager carManager = new CarManager(new EfCarDal());
+            var result = carManager.GetCarDetails();
+            if (result.Success==true)
+            {
+
+                foreach (var car in carManager.GetCarDetails().Data)
+                {
+                    Console.WriteLine(car.CarName + "/" + car.CarName);
+
+                }
+            }
+
+          
+
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+        }
 
 
 
